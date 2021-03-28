@@ -1,0 +1,34 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: openstack
+  ssh_connection_options:
+    - "-o UserKnownHostsFile=/dev/null"
+    - "-o LogLevel=quiet"
+    - "-o StrictHostKeyChecking=no"
+lint:
+  name: yamllint
+platforms:
+  # https://docs.ovh.com/fr/public-cloud/premiere-connexion/
+  - name: role_firewalld_debian_stretch
+    image: "e38d86a1-3777-45f5-bab7-6751265f84a0"
+    flavor: "s1-2"
+    ssh_user: debian
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  env:
+    OS_AUTH_URL: "https://auth.cloud.ovh.net/v2.0/"
+    OS_TENANT_ID: "fd5352eacf9b4c25bef64eb51ef97207"
+    OS_TENANT_NAME: "0949978427654778"
+    OS_USERNAME: "fxedjCFq3YAH"
+    OS_PASSWORD: "5CMG68Xsr2eYVaYugkMSGYRkhWwt3Pjs"
+    OS_REGION_NAME: "GRA3"
+scenario:
+  name: ci
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

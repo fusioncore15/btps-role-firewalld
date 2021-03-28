@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+    {% if service.short is defined -%}
+        <short>{{ service.short | escape }}</short>
+    {%- endif %}
+    {% if service.description is defined -%}
+        <description>{{ service.description | escape }}</description>
+    {%- endif %}
+    {% if service.ports is defined -%}
+        {% for port in service.ports -%}
+            {% if port.number is sequence -%}
+                {% for number in port.number -%}
+                    <port protocol="{{ port.protocol | escape }}" port="{{ number | escape }}"/>
+                {%- endfor %}
+            {% else %}
+                 <port protocol="{{ port.protocol | escape }}" port="{{ port.number | escape }}"/>
+            {%- endif %}
+        {%- endfor %}
+    {%- endif %}
+    {% if service.protocols is defined -%}
+        {% for protocol in service.protocols -%}
+            <protocol value="{{ protocol | escape }}"/>
+        {% endfor -%}
+    {%- endif %}
+    {% if service.source_ports is defined -%}
+        {% for source_port in service.source_ports -%}
+            {% if source_port.number is sequence -%}
+                {% for number in source_port.number -%}
+                    <source-port protocol="{{ source_port.protocol | escape }}" port="{{ number | escape }}"/>
+                {%- endfor %}
+            {% else %}
+                <source-port protocol="{{ source_port.protocol | escape }}" port="{{ source_port.number | escape }}"/>
+            {%- endif %}
+        {%- endfor %}
+    {%- endif %}
+    {% if service.modules is defined -%}
+        {% for modules in service.modules -%}
+            <modules value="{{ module | escape }}"/>
+        {%- endfor %}
+    {%- endif %}
+    {% if service.destination is defined -%}
+        <destination ipv4="{{ service.destination.ipv4 | escape }}" ipv6="{{ service.destination.ipv6 | escape }}"/>
+    {%- endif %}
+</service>

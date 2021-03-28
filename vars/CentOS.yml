@@ -1,0 +1,20 @@
+---
+# Packages to install
+firewalld_packages:
+  - firewalld
+
+# Service name
+firewalld_service_name: firewalld.service
+
+# Binary name
+firewalld_binary: firewalld
+
+# Binary command name
+firewalld_command_binary: firewalld-cmd
+
+# Config directory
+firewalld_config_directory: /etc/firewalld
+
+# User and group
+firewalld_owner: root
+firewalld_group: root

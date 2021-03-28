@@ -1,0 +1,70 @@
+---
+# Enable/disable filter services
+# - service: http (any firewalld service and custom service)
+#   zone: public (any firewalld zone, default : public)
+#   permanent: False (True/False, default : True)
+#   timeout: 3600 (timeout in secondes if permanent = False, default : omit)
+#   source: "192.168.0.1" (any IP or range of IP, default : omit)
+#   state: enabled (enabled/disabled)
+
+# Global services rules (defined in "all" group or others top level groups)
+firewalld_global_services: []
+
+# Services rules specific to host
+firewalld_services: []
+
+# Enable/disable filter ports
+# - port: "80/tcp" (port/protocol or port-port/protocol for range of ports)
+#   zone: public (any firewalld zone, default : public)
+#   permanent: False (True/False, default : True)
+#   timeout: 3600 (timeout in secondes if permanent = False, default : omit)
+#   source: "192.168.0.1" (any IP or range of IP, default : omit)
+#   state: enabled (enabled/disabled)
+
+# Global ports rules (defined in "all" group or others top level groups)
+firewalld_global_ports: []
+
+# Ports rules specific to host
+firewalld_ports: []
+
+# Enable/disable masquerades
+# - masquerade: yes (yes/no)
+#   zone: public (any firewalld zone, default : public)
+#   permanent: False (True/False, default : True)
+#   timeout: 3600 (timeout in secondes if permanent = False, default : omit)
+#   state: enabled (enabled/disabled)
+
+# Global masquerades rules (defined in "all" group or others top level groups)
+firewalld_global_masquerades: []
+
+# Ports rules specific to host
+firewalld_masquerades: []
+
+# Enable/disable rich rules
+# - rich_rule: 'rule service name="ftp" audit limit value="1/m" accept' (any firewalld rich rule)
+#   zone: public (any firewalld zone, default : public)
+#   permanent: False (True/False, default : True)
+#   timeout: 3600 (timeout in secondes if permanent = False, default : omit)
+#   state: enabled (enabled/disabled)
+
+# Global rich rules (defined in "all" group or others top level groups)
+firewalld_global_rich_rules: []
+
+# Rich rules specific to host
+firewalld_rich_rules: []
+
+# Links network interfaces to zones
+# - interface: "enps03" (any network interface name)
+#   zone: public (any firewalld zone, default : public)
+#   permanent: False (True/False, default : True)
+#   timeout: 3600 (timeout in secondes if permanent = False, default : omit)
+#   state: enabled (enabled/disabled)
+
+# Global interfaces rules (defined in "all" group or others top level groups)
+firewalld_global_interfaces: []
+
+# Ports interfaces specific to host
+firewalld_interfaces: []
+
+# Service
+firewalld_service_started: true

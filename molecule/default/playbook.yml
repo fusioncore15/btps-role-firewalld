@@ -1,0 +1,39 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    api:
+      firewalld_custom_services:
+        - service: http-81
+          short: WWW (HTTP)
+          description: "HTTP is the protocol used to serve Web pages. If you plan to make your Web server publicly available, enable this option. This option is not required for viewing pages locally or developing Web pages."
+          ports:
+            - number: [81]
+              protocol: tcp
+      firewalld_services:
+        - service: http-81
+          state: enabled
+          zone: public
+          permanent: False
+          timeout: 3600
+    firewalld_services:
+      - service: http
+        state: enabled
+        zone: public
+        permanent: true
+      - service: https
+        state: enabled
+        zone: public
+        permanent: true
+
+  roles:
+    - role: role-firewalld
+
+  tasks:
+    - name: run role "btps.firewalld" and configure firewalld for "btps.apache"
+      import_role:
+        name: role-firewalld
+        tasks_from: api-configure-services.yml
+      vars:
+        firewalld_services: "{{ api.firewalld_services | default([]) }}"
+        firewalld_custom_services: "{{ api.firewalld_custom_services | default([]) }}"

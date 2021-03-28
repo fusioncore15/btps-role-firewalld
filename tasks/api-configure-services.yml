@@ -1,0 +1,27 @@
+---
+- name: create/redefine firewalld custom services files (/etc/firewalld/services/*.xml)
+  template:
+    src: etc/firewalld/services/service.xml.j2
+    dest: "{{ firewalld_config_directory }}/services/{{ service.service }}.xml"
+    owner: "{{ firewalld_owner }}"
+    group: "{{ firewalld_group }}"
+    mode: "0640"
+  notify: reload firewalld-cmd
+  when: firewalld_custom_services is defined
+  with_items: "{{ firewalld_custom_services | list }}"
+  loop_control:
+    loop_var: service
+
+- name: add firewalld rules for zone services
+  firewalld:
+    service: "{{ service.service }}"
+    zone: "{{ service.zone | default('public') }}"
+    permanent: "{{ service.permanent | default(True) }}"
+    timeout: "{{ service.timeout | default(omit) }}"
+    source: "{{ service.source | default(omit) }}"
+    state: "{{ service.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_services is defined
+  with_items: "{{ firewalld_services }}"
+  loop_control:
+    loop_var: service

@@ -1,0 +1,20 @@
+---
+- name: check if firewalld is installed
+  command: "which {{ firewalld_binary }}"
+  changed_when: firewalld_installed.rc != 0
+  failed_when: False
+  register: firewalld_installed
+
+- block:
+  - name: create firewalld config directory
+    file:
+      path: "{{ firewalld_config_directory }}/services"
+      state: directory
+      mode: "0755"
+
+  - name: pre-configure firewalld to not close SSH connection
+    import_tasks: api-configure-services.yml
+    vars:
+      firewalld_custom_services: "{{ firewalld_custom_services_pre_configure_ssh | default([]) }}"
+
+  when: firewalld_installed.rc != 0

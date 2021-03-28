@@ -1,0 +1,13 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y -qq update && apt -y -qq upgrade && apt install -y python-minimal python3-minimal python-zipstream)
+      become: true
+      changed_when: false
+      register: result
+      until: result.rc == 0
+      retries: 3
+      delay: 10

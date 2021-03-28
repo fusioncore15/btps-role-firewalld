@@ -1,0 +1,6 @@
+---
+- name: install firewalld
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ firewalld_packages }}"

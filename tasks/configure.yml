@@ -1,0 +1,67 @@
+---
+- name: add firewalld rules for zone services
+  firewalld:
+    service: "{{ service.service }}"
+    zone: "{{ service.zone | default('public') }}"
+    permanent: "{{ service.permanent | default(True) }}"
+    timeout: "{{ service.timeout | default(omit) }}"
+    source: "{{ service.source | default(omit) }}"
+    state: "{{ service.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_services is defined
+  with_items: "{{ firewalld_services + firewalld_global_services }}"
+  loop_control:
+    loop_var: service
+
+- name: add firewalld rules for zone ports
+  firewalld:
+    port: "{{ port.port | default(omit) }}"
+    zone: "{{ port.zone | default('public') }}"
+    permanent: "{{ port.permanent | default(True) }}"
+    timeout: "{{ port.timeout | default(omit) }}"
+    source: "{{ port.source | default(omit) }}"
+    state: "{{ port.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_ports is defined
+  with_items: "{{ firewalld_ports + firewalld_global_ports }}"
+  loop_control:
+    loop_var: port
+
+- name: add firewalld masquerade for zones
+  firewalld:
+    masquerade: "{{ masquerade.masquerade }}"
+    zone: "{{ masquerade.zone | default('public') }}"
+    permanent: "{{ masquerade.permanent | default(True) }}"
+    timeout: "{{ masquerade.timeout | default(omit) }}"
+    state: "{{ masquerade.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_masquerades is defined
+  with_items: "{{ firewalld_masquerades + firewalld_global_masquerades }}"
+  loop_control:
+    loop_var: masquerade
+
+- name: add firewalld rich rules
+  firewalld:
+    rich_rule: "{{ rich_rule.rich_rule }}"
+    zone: "{{ rich_rule.zone | default('public') }}"
+    permanent: "{{ rich_rule.permanent | default(True) }}"
+    timeout: "{{ rich_rule.timeout | default(omit) }}"
+    state: "{{ rich_rule.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_rich_rules is defined
+  with_items: "{{ firewalld_rich_rules + firewalld_global_rich_rules }}"
+  loop_control:
+    loop_var: rich_rule
+
+- name: add firewalld interfaces for zones
+  firewalld:
+    interface: "{{ interface.interface }}"
+    zone: "{{ interface.zone | default('public') }}"
+    permanent: "{{ interface.permanent | default(True) }}"
+    timeout: "{{ interface.timeout | default(omit) }}"
+    state: "{{ interface.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_rich_rules is defined
+  with_items: "{{ firewalld_interfaces + firewalld_global_interfaces }}"
+  loop_control:
+    loop_var: interface

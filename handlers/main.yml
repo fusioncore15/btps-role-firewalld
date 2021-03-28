@@ -1,0 +1,13 @@
+---
+- name: restart firewalld
+  service:
+    name: "{{ firewalld_service_name }}"
+    state: restarted
+
+- name: reload firewalld
+  service:
+    name: "{{ firewalld_service_name }}"
+    state: reloaded
+
+- name: reload firewalld-cmd
+  command: "{{ firewalld_command_binary }} --reload"
