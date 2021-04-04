@@ -1,6 +1,6 @@
 ---
 - name: add firewalld rules for zone services
-  ansible.builtin.firewalld:
+  ansible.posix.firwalld:
     service: "{{ service.service }}"
     zone: "{{ service.zone | default('public') }}"
     permanent: "{{ service.permanent | default(True) }}"
@@ -14,7 +14,7 @@
     loop_var: service
 
 - name: add firewalld rules for zone ports
-  ansible.builtin.firewalld:
+  ansible.posix.firwalld:
     port: "{{ port.port | default(omit) }}"
     zone: "{{ port.zone | default('public') }}"
     permanent: "{{ port.permanent | default(True) }}"
@@ -28,7 +28,7 @@
     loop_var: port
 
 - name: add firewalld masquerade for zones
-  ansible.builtin.firewalld:
+  ansible.posix.firwalld:
     masquerade: "{{ masquerade.masquerade }}"
     zone: "{{ masquerade.zone | default('public') }}"
     permanent: "{{ masquerade.permanent | default(True) }}"
@@ -41,7 +41,7 @@
     loop_var: masquerade
 
 - name: add firewalld rich rules
-  ansible.builtin.firewalld:
+  ansible.posix.firwalld:
     rich_rule: "{{ rich_rule.rich_rule }}"
     zone: "{{ rich_rule.zone | default('public') }}"
     permanent: "{{ rich_rule.permanent | default(True) }}"
@@ -54,7 +54,7 @@
     loop_var: rich_rule
 
 - name: add firewalld interfaces for zones
-  ansible.builtin.firewalld:
+  ansible.posix.firwalld:
     interface: "{{ interface.interface }}"
     zone: "{{ interface.zone | default('public') }}"
     permanent: "{{ interface.permanent | default(True) }}"
