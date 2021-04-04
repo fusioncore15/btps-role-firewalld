@@ -13,7 +13,7 @@
     loop_var: service
 
 - name: add firewalld rules for zone services
-  ansible.posix.firwalld:
+  ansible.posix.firewalld:
     service: "{{ service.service }}"
     zone: "{{ service.zone | default('public') }}"
     permanent: "{{ service.permanent | default(True) }}"
