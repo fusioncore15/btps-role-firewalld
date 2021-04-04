@@ -1,13 +1,13 @@
 ---
 - name: ensure firewalld is running and enabled on boot
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ firewalld_service_name }}"
     state: started
     enabled: yes
   when: firewalld_service_started
 
 - name: ensure firewalld is stop and enabled on boot
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ firewalld_service_name }}"
     state: stopped
     enabled: no

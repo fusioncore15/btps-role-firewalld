@@ -13,7 +13,7 @@
     loop_var: service
 
 - name: add firewalld rules for zone services
-  firewalld:
+  ansible.builtin.firewalld:
     service: "{{ service.service }}"
     zone: "{{ service.zone | default('public') }}"
     permanent: "{{ service.permanent | default(True) }}"
