@@ -5,21 +5,22 @@
   failed_when: False
   register: firewalld_installed
 
-- name: Configure firewallD
-  template:
-    src: etc/firewalld/firewalld.conf.j2
-    dest: "{{ firewalld_config_directory }}/firewalld.conf"
-    owner: "{{ firewalld_owner }}"
-    group: "{{ firewalld_group }}"
-    mode: "0640"
-  notify: reload firewalld-cmd
-
 - block:
   - name: create firewalld config directory
     file:
       path: "{{ firewalld_config_directory }}/services"
       state: directory
       mode: "0755"
+
+  - name: Configure firewallD
+    template:
+      src: etc/firewalld/firewalld.conf.j2
+      dest: "{{ firewalld_config_directory }}/firewalld.conf"
+      owner: "{{ firewalld_owner }}"
+      group: "{{ firewalld_group }}"
+      mode: "0640"
+    notify: reload firewalld-cmd
+
 
   - name: pre-configure firewalld to not close SSH connection
     import_tasks: api-configure-services.yml
