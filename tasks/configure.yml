@@ -1,4 +1,13 @@
 ---
+- name: Configure firewallD
+  template:
+    src: etc/firewalld/firewalld.conf.j2
+    dest: "{{ firewalld_config_directory }}/firewalld.conf"
+    owner: "{{ firewalld_owner }}"
+    group: "{{ firewalld_group }}"
+    mode: "0640"
+  notify: reload firewalld-cmd
+
 - name: add firewalld rules for zone services
   ansible.posix.firewalld:
     service: "{{ service.service }}"
