@@ -8,19 +8,6 @@
     mode: "0640"
   notify: reload firewalld-cmd
 
-- name: add firewalld zone
-  ansible.posix.firewalld:
-    zone: "{{ zone.zone }}"
-    permanent: "{{ zone.permanent | default(True) }}"
-    timeout: "{{ zone.timeout | default(omit) }}"
-    source: "{{ zone.source | default(omit) }}"
-    state: "{{ zone.state }}"
-  notify: reload firewalld-cmd
-  when: firewalld_zones is defined
-  with_items: "{{ firewalld_zones + firewalld_global_zones }}"
-  loop_control:
-    loop_var: zone
-
 - name: add firewalld rules for zone services
   ansible.posix.firewalld:
     service: "{{ service.service }}"

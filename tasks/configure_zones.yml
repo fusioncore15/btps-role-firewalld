@@ -1,0 +1,13 @@
+---
+- name: add firewalld zone
+  ansible.posix.firewalld:
+    zone: "{{ zone.zone }}"
+    permanent: "{{ zone.permanent | default(True) }}"
+    state: "{{ zone.state }}"
+  notify: reload firewalld-cmd
+  when: firewalld_zones is defined
+  with_items: "{{ firewalld_zones + firewalld_global_zones }}"
+  loop_control:
+    loop_var: zone
+
+...

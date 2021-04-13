@@ -17,6 +17,11 @@
   tags:
     - action:install
 
+- name: configure zones
+  import_tasks: configure_zones.yml
+  tags:
+    - action:configure
+
 - name: configure
   import_tasks: configure.yml
   tags:
