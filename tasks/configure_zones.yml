@@ -1,5 +1,5 @@
 ---
-- name: add firewalld zone
+- name: Manage firewalld zone
   ansible.posix.firewalld:
     zone: "{{ zone.zone }}"
     permanent: "{{ zone.permanent | default(True) }}"
@@ -11,7 +11,7 @@
     loop_var: zone
   register: zone_edit
 
-- name: Reload firewalld to apply zones changes
+- name: Reload to apply zones changes
   command: "{{ firewalld_command_binary }} --reload"
   when: zone_edit.changed
 
