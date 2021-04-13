@@ -7,6 +7,9 @@
 #   source: "192.168.0.1" (any IP or range of IP, default : omit)
 #   state: enabled (enabled/disabled)
 
+# Global zones
+firewalld_global_zones: []
+
 # Global services rules (defined in "all" group or others top level groups)
 firewalld_global_services: []
 
