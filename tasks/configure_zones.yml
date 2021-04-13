@@ -9,8 +9,10 @@
   with_items: "{{ firewalld_zones + firewalld_global_zones }}"
   loop_control:
     loop_var: zone
+  register: zone_edit
 
 - name: Reload firewalld to apply zones changes
   command: "{{ firewalld_command_binary }} --reload"
+  when: zone_edit.changed
 
 ...
