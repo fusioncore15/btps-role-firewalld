@@ -10,4 +10,7 @@
   loop_control:
     loop_var: zone
 
+- name: Reload firewalld to apply zones changes
+  command: "{{ firewalld_command_binary }} --reload"
+
 ...
