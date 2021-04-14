@@ -1,11 +1,24 @@
 ---
-- name: Manage firewalld zone
+- name: Manage firewalld zone presence
   ansible.posix.firewalld:
     zone: "{{ zone.zone }}"
-    permanent: "{{ zone.permanent | default(True) }}"
+    permanent: "{{ zone.permanent | default('True') }}"
+    state: "{{ zone.state }}"
+    immediate: "{{ zone.immediate | default('True'}}"
+  notify: reload firewalld-cmd
+  when: firewalld_zones is defined
+  with_items: "{{ firewalld_zones + firewalld_global_zones }}"
+  loop_control:
+    loop_var: zone
+  register: zone_edit
+
+- name: Manage firewalld zone presence
+  ansible.posix.firewalld:
+    zone: "{{ zone.zone }}"
+    permanent: "{{ zone.permanent | default('True') }}"
     state: "{{ zone.state }}"
     icmp_block: "{{ zone.icmp_block | default(omit) }}"
-    icmp_block_inversion: "{{ zone.icmp_block_inversion | default(false) }}"
+    icmp_block_inversion: "{{ zone.icmp_block_inversion | default('False') }}"
   notify: reload firewalld-cmd
   when: firewalld_zones is defined
   with_items: "{{ firewalld_zones + firewalld_global_zones }}"
