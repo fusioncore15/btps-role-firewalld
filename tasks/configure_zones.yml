@@ -4,7 +4,7 @@
     zone: "{{ zone.zone }}"
     permanent: "{{ zone.permanent | default('True') }}"
     state: "{{ zone.state }}"
-    immediate: "{{ zone.immediate | default('True'}}"
+    immediate: "{{ zone.immediate | default('True') }}"
   notify: reload firewalld-cmd
   when: firewalld_zones is defined
   with_items: "{{ firewalld_zones + firewalld_global_zones }}"
