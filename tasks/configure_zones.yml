@@ -4,6 +4,8 @@
     zone: "{{ zone.zone }}"
     permanent: "{{ zone.permanent | default(True) }}"
     state: "{{ zone.state }}"
+    icmp_block: "{{ zone.icmp_block | default(omit) }}"
+    icmp_block_inversion: "{{ zone.icmp_block_inversion | default(false) }}"
   notify: reload firewalld-cmd
   when: firewalld_zones is defined
   with_items: "{{ firewalld_zones + firewalld_global_zones }}"
